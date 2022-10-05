@@ -1,9 +1,12 @@
-import './App.css';
+import Dashboard from './components/Dashboard.js'
+import './components/styles.css';
+import axios from 'axios';
 
 function App() {
+
   return (
     <div className="App">
-      <p>Fuck</p>
+      <Dashboard />
     </div>
   );
 }

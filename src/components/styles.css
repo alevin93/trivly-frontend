@@ -1,0 +1,153 @@
+html,
+body {
+    margin: 0;
+    max-height: 100vh;
+    background-color: rgb(100, 86, 86)
+}
+
+.main-content-container {
+    background-color: rgb(100, 86, 86);
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    height: 100%;
+}
+
+.main-header-text {
+    font-family: 'Gemunu Libre', sans-serif;
+    margin: 1rem;
+    display: flex;
+    font-size: 2rem;
+    color: white;
+    justify-content: center;
+}
+
+.main-header-container {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    border-bottom: rgb(52, 40, 40) 5px solid;
+}
+
+.profile-buttons {
+    position: absolute;
+    color: white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    right: 1rem;
+    margin: .7rem;
+}
+
+.main-popup-container {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 90vh;
+}
+
+.lesser-popup-container {
+    background-color: black;
+    margin: 1rem;
+    display: grid;
+    grid-template: 1fr / 1fr;
+    place-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 750px;
+    height: fit-content;
+    border: rgb(52, 40, 40) 5px solid;
+    border-radius: 25px;
+    padding: 3rem;
+}
+
+.popup-text {
+    color:white;
+}
+
+.popup-login-wrapper {
+    width: 100%;
+}
+
+.form-container {
+    width:100%;
+}
+
+.welcome-message-text {
+    color: white;
+}
+
+
+
+.submit-buttons-container {
+    display: flex;
+    justify-content: center;
+}
+
+.submit-button-register {
+    color:white;
+    font-size: 1.5rem;
+    font-family: 'Gemunu Libre', sans-serif;
+    background-color:rgb(82, 68, 123);
+    width: 35%;
+    min-height: 3rem;
+    outline: none;
+    border: none;
+    border: 5px solid black;
+    border-bottom-right-radius: 25px;
+
+}
+
+.submit-button-login {
+    color: white;
+    font-size: 1.5rem;
+    font-family: 'Gemunu Libre', sans-serif;
+    background-color:  rgba(129, 49, 49, 0.692);
+    width: 35%;
+    min-height: 3rem;
+    outline: none;
+    border: none;
+    border: 5px solid black;
+    border-bottom-left-radius: 25px;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.email-login-form {
+    text-align: center;
+    width: 68%;
+    outline: none;
+    border: none;
+    min-height: 2rem;
+    border: 5px solid black;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.password-login-form {
+    text-align: center;
+    width: 68%;
+    outline: none;
+    min-height: 2rem;
+    border: 5px solid black;
+}
+
+.welcome-message-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.email-wrapper {
+    display: flex;
+    justify-content: center;
+
+}
+
+.password-wrapper {
+    display: flex;
+    justify-content: center;
+
+}

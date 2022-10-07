@@ -43,7 +43,7 @@ body {
     display: flex;
     justify-content: center;
     width: 100vw;
-    height: 90vh;
+    height: fit-content;
 }
 
 .lesser-popup-container {
@@ -58,7 +58,7 @@ body {
     height: fit-content;
     border: rgb(52, 40, 40) 5px solid;
     border-radius: 25px;
-    padding: 3rem;
+    padding: 2rem;
 }
 
 .popup-text {
@@ -150,4 +150,10 @@ body {
     display: flex;
     justify-content: center;
 
+}
+
+.errmsg {
+    font-family: 'Gemunu Libre', sans-serif;
+    color: white;
+    text-align: center;
 }

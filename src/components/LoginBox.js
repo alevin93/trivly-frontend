@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from './Login.js';
 import Alert from './Alert.js'
+import cookie from 'react-cookies'
 import useAuth from './RequireAuth'
 
 function LoginBox() {

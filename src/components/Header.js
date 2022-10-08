@@ -1,5 +1,5 @@
 import React,{ useState } from 'react';
-import axios from 'axios';
+import axios from '../api/axios';
 import cookies from 'react-cookies'
 import './styles.css';
 
@@ -7,10 +7,10 @@ import './styles.css';
 function Header() {
 
   const handleLogout = () => {
-    axios.get("http://localhost:3000/logout");
+    axios.get("/logout");
     localStorage.clear();
-    cookies.remove();
-    window.location.reload();
+    cookies.remove("jwt");
+    //window.location.reload();
   }
 
   return (

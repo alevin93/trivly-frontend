@@ -4,31 +4,7 @@ import Login from './Login.js';
 import Alert from './Alert.js'
 import useAuth from './RequireAuth'
 
-function QuizBox() {
-
-    const [category, setCategory] = useState('');
-    const [question, setQuestion] = useState('');
-    const [user, setUser] = useState('');
-
-    var categories = [];
-
-    useEffect(() => {
-        getFeed();
-    })
-
-    if (localStorage.getItem("user")  && user === '' ) { 
-        setUser(JSON.stringify(localStorage.getItem("user")).replace(/['"]+/g, ''));
-    } else if (user === '') {
-        setUser("Guest");
-    }
-
-    
-
-    const getFeed = async () => {
-        const result = await axios.get("/feed").then(result => console.log(result.data));
-    }
-
-
+function ReadyBox({category}) {
   
   if(localStorage.getItem("user")) {
     return (
@@ -36,7 +12,8 @@ function QuizBox() {
           <div className="lesser-popup-container">
               <div className="popup-login-wrapper">
                   <>
-                  <button className="errmsg">Play</button>
+                  <button className="errmsg" >Play</button>
+                  <p className="errmsg">Next Topic: {category}</p>
                   </>
               </div>
               
@@ -50,8 +27,8 @@ function QuizBox() {
           <div className="lesser-popup-container">
               <div className="popup-login-wrapper">
                   <>
-                  <p className="errmsg">Play</p>
-                  <p className="errmsg">Next topic is:</p>
+                  <button className="errmsg" >Play</button>
+                  <p className="errmsg">Next Topic: {category}</p>
                   </>
               </div>
               
@@ -61,4 +38,4 @@ function QuizBox() {
   }
 }
 
-export default QuizBox
+export default ReadyBox

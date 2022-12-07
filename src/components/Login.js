@@ -14,7 +14,7 @@ function Login() {
 
   const [user, setUsernameReg] = useState('');
   const [pwd, setPasswordReg] = useState('');
-  const [errMsg, setErrMsg] = useState("Welcome to Trivly!");
+  const [errMsg, setErrMsg] = useState("Login/Register?");
 
   const handleLogin = async (e) => {
     //authService.login(usernameReg, passwordReg)
@@ -30,7 +30,7 @@ function Login() {
       const accessToken = response?.data?.accessToken;
       setErrMsg("Success!");
       localStorage.setItem("user", user);
-      setAuth({ user, pwd, accessToken })
+      localStorage.setItem("token", accessToken);
       window.location.reload();
     } catch (err) {
       if (!err?.response) {

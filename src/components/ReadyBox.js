@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../api/axios'
 import Login from './Login.js';
-import Alert from './Alert.js'
 import useAuth from './RequireAuth'
 
-function ReadyBox({category}) {
+function ReadyBox({category, quizzing}) {
+
+  const [cat, setCat] = useState(category);
+
+  useEffect(() => {
+    setCat(category)
+  }, [category])
+
+  function setIsQuizzing() {
+    quizzing(true);
+  }
   
   if(localStorage.getItem("user")) {
     return (
       <div className="main-popup-container">
           <div className="lesser-popup-container">
-              <div className="popup-login-wrapper">
                   <>
-                  <button className="errmsg" >Play</button>
-                  <p className="errmsg">Next Topic: {category}</p>
+                  <button className="play-button" onClick={setIsQuizzing} >Play</button>
+                  <p className="errmsg">Next Topic: {cat}</p>
                   </>
-              </div>
-              
           </div>
       </div>
     )
@@ -25,13 +31,10 @@ function ReadyBox({category}) {
     return (
       <div className="main-popup-container">
           <div className="lesser-popup-container">
-              <div className="popup-login-wrapper">
                   <>
-                  <button className="errmsg" >Play</button>
-                  <p className="errmsg">Next Topic: {category}</p>
+                  <button className="play-button" onClick={setIsQuizzing} >Play as Guest</button>
+                  <p className="errmsg">Next Topic: {cat}</p>
                   </>
-              </div>
-              
           </div>
       </div>
     )

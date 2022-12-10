@@ -3,7 +3,7 @@ import axios from '../api/axios'
 import Login from './Login.js';
 import useAuth from './RequireAuth'
 
-function ReadyBox({category, quizzing}) {
+function ReadyBox({category, quizzing, isTesting}) {
 
   const [cat, setCat] = useState(category);
 
@@ -15,7 +15,7 @@ function ReadyBox({category, quizzing}) {
     quizzing(true);
   }
   
-  if(localStorage.getItem("user")) {
+  if(localStorage.getItem("user") && !isTesting ) {
     return (
       <div className="main-popup-container">
           <div className="lesser-popup-container">
@@ -27,12 +27,24 @@ function ReadyBox({category, quizzing}) {
       </div>
     )
 
-  } else {
+  } else if (!localStorage.getItem("user") && !isTesting) {
     return (
       <div className="main-popup-container">
           <div className="lesser-popup-container">
                   <>
                   <button className="play-button" onClick={setIsQuizzing} >Play as Guest</button>
+                  <p className="errmsg">Next Topic: {cat}</p>
+                  </>
+          </div>
+      </div>
+    )
+  }
+  else if (isTesting) {
+    return (
+      <div className="main-popup-container">
+          <div className="lesser-popup-container">
+                  <>
+                  <button className="play-button" onClick={setIsQuizzing} >Continue</button>
                   <p className="errmsg">Next Topic: {cat}</p>
                   </>
           </div>

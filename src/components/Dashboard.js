@@ -18,6 +18,7 @@ function Dashboard() {
   const [count, setCount] = useState(0);
   const [isTiming, setIsTiming] = useState(false);
   const [canAnswer, setCanAnswer] = useState(true);
+  const [isTesting, setIsTesting] = useState(false);
 
   let headerRef = useRef(null);
 
@@ -32,8 +33,10 @@ function Dashboard() {
   const childFinishedQuestion = () => {
     let temparr = localStorage.getItem("categories").split(',');
     if(!temparr[1]) {
+      setTimeout(2000);
       setIsQuizzing(false);
       setShowResults(true);
+      setIsTesting(false);
     }
     setFinishedQuestion(true);
     setIsTiming(false);
@@ -67,6 +70,7 @@ function Dashboard() {
  
 
   function startQuestion() {
+    setIsTesting(true);
     setCanAnswer(true);
     setIsQuizzing(true);
     setIsTiming(true);
@@ -79,15 +83,13 @@ function Dashboard() {
     if (localStorage.getItem("user")) { 
         setUser(JSON.stringify(localStorage.getItem("user")).replace(/['"]+/g, ''));
         
-    } else {
-        setUser("Guest");
     }
 
     console.log("User is: " + user)
   }
 
   const getFeed = async () => {
-      if (user == "Guest" && !category && localStorage.getItem("categories")) {
+      if (!localStorage.getItem("user") && !category && localStorage.getItem("categories")) {
         categories = localStorage.getItem("categories").split(',')
         setNextCategory(categories[0])
         setCategory(categories[0])
@@ -131,6 +133,13 @@ function Dashboard() {
             guesses: guesses,
             attempted: 1,
         }))
+        if(!localStorage.getItem("catKey")) {
+          localStorage.setItem("catKey", [`${category}`])
+        } else {
+          let tempKey = [localStorage.getItem("catKey"), category];
+          localStorage.setItem("catKey", tempKey);
+          console.log(localStorage.getItem("catKey"));
+        }
     } else {
         var temp = JSON.parse(localStorage.getItem(`cat:${category}`));
         temp.guesses = temp.guesses + guesses;
@@ -169,14 +178,14 @@ function Dashboard() {
   return (
     <div className="main-content-container">
         <Header isTiming={isTiming} stopTimer={stopTimer} />
-        <ReadyBox quizzing={startQuestion} category={nextCategory} />
+        <ReadyBox quizzing={startQuestion} category={nextCategory} isTesting={isTesting} />
     </div>
   )
   } else if (!localStorage.getItem('user')  && !isQuizzing) {
   return (
     <div className="main-content-container">
       <Header isTiming={isTiming} stopTimer={stopTimer} />
-      <ReadyBox quizzing={startQuestion} category={nextCategory} />
+      <ReadyBox quizzing={startQuestion} category={nextCategory} isTesting={isTesting} />
       <LoginBox />
     </div>
   )
@@ -203,7 +212,7 @@ function Dashboard() {
       <div>
         <Header isTiming={isTiming} stopTimer={stopTimer} logResults={logResults}/>
         <QuizBox updateCount={updateCount} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
-        <ReadyBox category={nextCategory} quizzing={startQuestion}/>
+        <ReadyBox category={nextCategory} quizzing={startQuestion} isTesting={isTesting} />
       </div>
     )
   } else if (isQuizzing && localStorage.getItem('user') && finishedQuestion) {
@@ -211,7 +220,7 @@ function Dashboard() {
       <div>
         <Header isTiming={isTiming} stopTimer={stopTimer} logResults={logResults}/>
         <QuizBox updateCount={updateCount} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
-        <ReadyBox category={nextCategory} quizzing={startQuestion}/>
+        <ReadyBox category={nextCategory} quizzing={startQuestion} isTesting={isTesting} />
       </div>
     )
   } 

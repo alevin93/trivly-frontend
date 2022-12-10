@@ -11,12 +11,17 @@ function Results({user}) {
     })
 
     const getResults = async () => {
-        console.log(localStorage.getItem("user"))
-        const result = await axios.post("/getResults", {"user": user})
-            .then(result => {
-                let records = JSON.parse(result.data);
-                console.log(records);
-            })
+        if(localStorage.getItem("user")) {
+            console.log(localStorage.getItem("user"))
+            const result = await axios.post("/getResults", {"user": user})
+                .then(result => {
+                    let records = JSON.parse(result.data);
+                    console.log(records);
+                })
+        } else {
+            let tempKey = localStorage.getItem("catKey").split(",");
+            console.log(tempKey);
+        }
     }
 
     return (

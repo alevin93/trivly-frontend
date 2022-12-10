@@ -5,6 +5,7 @@ import './styles.css';
 function Results({user}) {
 
     const [results, setResults] = useState([]);
+    const [resultClasses, setResultsClasses] = useState([]);
 
     useEffect(() => {
         getResults();
@@ -21,6 +22,7 @@ function Results({user}) {
         } else {
             let tempKey = localStorage.getItem("catKey").split(",");
             console.log(tempKey);
+            
         }
     }
 

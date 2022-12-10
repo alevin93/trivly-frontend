@@ -263,7 +263,7 @@ body {
     grid-template: 1fr / 1fr;
     place-items: center;
     justify-content: center;
-    width: 90%;
+    width: 100%;
     max-width: 500px;
     height: 75vh;
     margin-left: 1rem;

@@ -32,8 +32,12 @@ function Dashboard() {
 
   const childFinishedQuestion = () => {
     let temparr = localStorage.getItem("categories").split(',');
-    if(!temparr[1]) {
-      setTimeout(2000);
+    if(localStorage.getItem("user") && !temparr[0]) {
+      setIsQuizzing(false);
+      setShowResults(true);
+      setIsTesting(false);
+    } 
+    else if (!localStorage.getItem("user") && !temparr[1]) {
       setIsQuizzing(false);
       setShowResults(true);
       setIsTesting(false);

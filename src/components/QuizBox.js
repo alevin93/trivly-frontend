@@ -22,11 +22,13 @@ function QuizBox({category, finishedQuestion, logResults, canAnswer, setCanAnswe
     const getQuestion = async () => {
         const result = await axios.post("/question", {"category": category, "user": localStorage.getItem("user")})
         const data = JSON.parse(JSON.stringify(result.data))
-        rawAnswers = data.incorrect;
-        rawAnswers[3] = data.correct;
-        answers = randomizeAnswers(rawAnswers)
-        setAnswer(answers);
-        setQuestion(data);
+        if (data?.correct && data?.incorrect) {
+            rawAnswers = data.incorrect;
+            rawAnswers[3] = data.correct;
+            answers = randomizeAnswers(rawAnswers)
+            setAnswer(answers);
+            setQuestion(data);
+        }
     }
 
     const randomizeAnswers = (array) => {

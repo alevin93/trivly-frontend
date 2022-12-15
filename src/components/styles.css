@@ -259,15 +259,14 @@ body {
 .results-box {
     background-color: #121213;
     display: grid;
+    grid-gap: 0;
+    grid-template-columns: 1fr repeat(2, 33%);
+    grid-template-rows: repeat(auto, fit-content);
+    justify-content: space-between;
     overflow-y: auto;
-    grid-template: 1fr / 1fr;
-    place-items: center;
-    justify-content: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     height: 75vh;
-    margin-left: 1rem;
-    margin-right: 1rem;
     border: white solid 2px
 }
 .result-item {
@@ -296,4 +295,20 @@ body {
     display: flex;
     margin-top: .2rem;
     justify-content: center;
+}
+
+.result-text {
+    font-size: 1.2rem;
+    font-family: 'Barlow', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+.result-box-cat {
+}
+.result-box-perc {
+    
+}
+.result-box-streak {
+    
 }

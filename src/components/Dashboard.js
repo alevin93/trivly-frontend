@@ -15,23 +15,22 @@ function Dashboard() {
   const [finishedQuestion, setFinishedQuestion] = useState(false);
   const [user, setUser] = useState(null);
   const [showResults, setShowResults] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [isTiming, setIsTiming] = useState(false);
   const [canAnswer, setCanAnswer] = useState(true);
   const [isTesting, setIsTesting] = useState(false);
 
   let headerRef = useRef(null);
-
-  var index = 0;
   var categories = [];
 
   useEffect(() => {
-      getUser()
-      getFeed()
-  })
+      getUser();
+      getFeed();
+  }, [user])
 
   const childFinishedQuestion = () => {
     let temparr = localStorage.getItem("categories").split(',');
+    console.log(temparr);
     if(localStorage.getItem("user") && !temparr[0]) {
       setIsQuizzing(false);
       setShowResults(true);
@@ -48,11 +47,12 @@ function Dashboard() {
     var temp = localStorage.getItem("categories").split(',');
     temp.shift();
     localStorage.setItem("categories", temp);
+    logResults();
     setNextCategory(temp[0]);
   }
 
   const stopTimer = () => {
-    setCount(count+4);
+    setCount(4, updateCount());
     let temparr = localStorage.getItem("categories").split(',');
     if(!temparr[1]) {
       setIsQuizzing(false);
@@ -79,8 +79,9 @@ function Dashboard() {
     setIsQuizzing(true);
     setIsTiming(true);
     setFinishedQuestion(false);
-    setCount(0);
+    setCount(1);
     setCategory(nextCategory);
+    createRecord();
   }
 
   const getUser = () => {
@@ -101,6 +102,7 @@ function Dashboard() {
       else if(!category) {
       const result = await axios.post("/feed", {"user": user})
           .then(result => {
+            console.log(result.data);
             if(result.data == "8675309") {
               setIsQuizzing(false);
               setShowResults(true);
@@ -121,12 +123,38 @@ function Dashboard() {
 
   const updateCount = () => {
     console.log("UPDATE COUNT RUN")
-    setCount(count+1)
-    console.log("Dashboard Guesses: " + count)
+    updateRecord();
+  }
+
+  const updateRecord = () => {
+    createRecord();
+    var temp = JSON.parse(localStorage.getItem(`tempcat:${category}`));
+    temp.guesses = temp.guesses + 1;
+    localStorage.setItem(`tempcat:${category}`, JSON.stringify(temp))
+    
+    console.log(localStorage.getItem(`tempcat:${category}`))
+  }
+
+  const createRecord = () => {
+    if(!localStorage.getItem(`tempcat:${category}`) && category) {
+      localStorage.setItem(`tempcat:${category}`, JSON.stringify({
+        category: category,
+        guesses: 0,
+        attempted: 1,
+      }))
+      presendResult();
+    }
+  }
+
+  const presendResult = async () => {
+    if(localStorage.getItem("user")) {
+      await axios.post("/results", { "user": localStorage.getItem("user"), "category": category, "guesses": 4, "streakflag": false } )
+    }
   }
 
   const logResults = async () => {
-    const guesses = count;
+    const guesses = (4 - JSON.parse(localStorage.getItem(`tempcat:${category}`)).guesses)*(-1);
+    console.log("guesses is: " + guesses)
     const username = localStorage.getItem("user");
     if(username && username !== "Guest") {
       await axios.post("/results", { "user": username, "category": category, "guesses": guesses })
@@ -199,14 +227,14 @@ function Dashboard() {
     return (
       <div>
         <Header isTiming={isTiming} stopTimer={stopTimer} logResults={logResults}/>
-        <QuizBox updateCount={updateCount} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
+        <QuizBox updateCount={updateRecord} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
       </div>
     )
   } else if (isQuizzing && !localStorage.getItem('user') && !finishedQuestion) {
     return (
       <div>
         <Header isTiming={isTiming} stopTimer={stopTimer} logResults={logResults}/>
-        <QuizBox updateCount={updateCount} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
+        <QuizBox updateCount={updateRecord} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
       </div>
     )
 
@@ -215,7 +243,7 @@ function Dashboard() {
     return (
       <div>
         <Header isTiming={isTiming} stopTimer={stopTimer} logResults={logResults}/>
-        <QuizBox updateCount={updateCount} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
+        <QuizBox updateCount={updateRecord} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
         <ReadyBox category={nextCategory} quizzing={startQuestion} isTesting={isTesting} />
       </div>
     )
@@ -223,7 +251,7 @@ function Dashboard() {
     return (
       <div>
         <Header isTiming={isTiming} stopTimer={stopTimer} logResults={logResults}/>
-        <QuizBox updateCount={updateCount} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
+        <QuizBox updateCount={updateRecord} logResults={logResults} category={category} finishedQuestion={childFinishedQuestion} canAnswer={canAnswer} setCanAnswer={childCanAnswer} />
         <ReadyBox category={nextCategory} quizzing={startQuestion} isTesting={isTesting} />
       </div>
     )

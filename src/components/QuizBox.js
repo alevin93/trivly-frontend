@@ -53,8 +53,6 @@ function QuizBox({category, finishedQuestion, logResults, canAnswer, setCanAnswe
             answerClassArray[index] = "answer-correct";
             setGuesses(guesses + 1)
             console.log("QuizBox Guesses: " + guesses)
-
-            logResults();
             
             finishedQuestion();
         } else {

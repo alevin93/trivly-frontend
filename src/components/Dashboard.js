@@ -153,7 +153,7 @@ function Dashboard() {
   }
 
   const logResults = async () => {
-    const guesses = (4 - JSON.parse(localStorage.getItem(`tempcat:${category}`)).guesses)*(-1);
+    var guesses = (4 - JSON.parse(localStorage.getItem(`tempcat:${category}`)).guesses)*(-1);
     console.log("guesses is: " + guesses)
     const username = localStorage.getItem("user");
     if(username && username !== "Guest") {
@@ -162,7 +162,7 @@ function Dashboard() {
     if(!localStorage.getItem(`cat:${category}`)) {
         localStorage.setItem(`cat:${category}`, JSON.stringify({
             category: category,
-            guesses: guesses,
+            guesses: guesses + 4,
             attempted: 1,
         }))
         if(!localStorage.getItem("catKey")) {
@@ -174,10 +174,11 @@ function Dashboard() {
         }
     } else {
         var temp = JSON.parse(localStorage.getItem(`cat:${category}`));
-        temp.guesses = temp.guesses + guesses;
+        temp.guesses = temp.guesses + guesses + 4;
         temp.attempted = temp.attempted+1;
         localStorage.setItem(`cat:${category}`, JSON.stringify(temp))
     }
+    //localStorage.removeItem(`cat:${category}`);
 
     console.log(JSON.parse(localStorage.getItem(`cat:${category}`)))
 }

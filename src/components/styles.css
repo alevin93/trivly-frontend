@@ -260,14 +260,18 @@ body {
     background-color: #121213;
     display: grid;
     grid-gap: 0;
-    grid-template-columns: 1fr repeat(2, 33%);
+    grid-template-columns: 1fr repeat(2, 20%);
     grid-template-rows: repeat(auto, fit-content);
     justify-content: space-between;
     overflow-y: auto;
     width: 100%;
     max-width: 600px;
     height: 75vh;
-    border: white solid 2px
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.results-box::-webkit-scrollbar {
+    display: none;
 }
 .result-item {
     color: white;
@@ -298,10 +302,36 @@ body {
 }
 
 .result-text {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-family: 'Barlow', sans-serif;
     color: white;
     text-align: center;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    margin: 0;
+}
+.result-text-alt {
+    font-size: 1rem;
+    margin: 0;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    font-family: 'Barlow', sans-serif;
+    color: black;
+    background-color: white;
+    text-align: center;
+}
+.result-header {
+    font-size: 1rem;
+    background-color: rgba(129, 49, 49, 0.66);
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    font-family: 'Gemunu Libre', sans-serif;
+    color: rgba(255, 255, 255, 0.768);
+    text-align: center;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    margin: 0;
 }
 
 .result-box-cat {

@@ -57,7 +57,6 @@ function Header({isTiming, stopTimer}) {
           <Timer timer={timer} />
         </div>
         <div className="profile-buttons">
-          <button className="logout-button" onClick={handleLogout} >Menu</button>
         </div>
       </div>
     </>
